@@ -1,0 +1,3 @@
+include weberp/config/deployment.ini_tmpl
+recursive-include weberp/public *
+recursive-include weberp/templates *
