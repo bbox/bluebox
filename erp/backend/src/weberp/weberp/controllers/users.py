@@ -72,13 +72,14 @@ class UsersController(BaseController):
 		return render("users/index.mako")
 	
 	def details(self, id):
-		c.user = model.User.query().get(id)
-		if c.user is None:
+		result = model.User.query().get(id)
+		if result is None:
 			error = Error()
 			error.id = 2
 			error.message = "The user with the id %s does not exist" % id
 			c.error = error
 			return render("users/error.mako")
+		c.user = result
 		return render("users/login.mako")
 	
 	def update(self, id):

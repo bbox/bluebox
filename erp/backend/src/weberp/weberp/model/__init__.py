@@ -19,8 +19,9 @@ def init_model(engine):
     meta.Session = orm.scoped_session(sm)
 
     # Here we use the "contextual session": http://www.sqlalchemy.org/docs/05/session.html#contextual-thread-local-sessions
-    meta.Session.mapper(User, users_table)
-    meta.Session.mapper(Team, teams_table)
+    meta.Session.mapper(User, users_table, properties = {"team": orm.relation(Team, backref="users", primaryjoin=users_table.c.teamid_usr==teams_table.c.id_tms)})
+    meta.Session.mapper(Team, teams_table, properties = {"manager": orm.relation(User, primaryjoin=teams_table.c.managerid_tms==users_table.c.id_usr)})
+
 
 ## Non-reflected tables may be defined and mapped at module level
 #foo_table = sa.Table("Foo", meta.metadata,
@@ -51,7 +52,7 @@ users_table = sa.Table("users_usr", meta.metadata,
 teams_table = sa.Table("teams_tms", meta.metadata,
     sa.Column("id_tms", sa.types.Integer, primary_key=True),
     sa.Column("name_tms", sa.types.Unicode(200), nullable=False),
-	sa.Column("managerid_usr", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=False),
+	sa.Column("managerid_tms", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=False),
 
 )
 
