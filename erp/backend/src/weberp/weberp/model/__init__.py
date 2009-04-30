@@ -20,7 +20,7 @@ def init_model(engine):
 
     # Here we use the "contextual session": http://www.sqlalchemy.org/docs/05/session.html#contextual-thread-local-sessions
     meta.Session.mapper(User, users_table)
- 
+    meta.Session.mapper(Team, teams_table)
 
 ## Non-reflected tables may be defined and mapped at module level
 #foo_table = sa.Table("Foo", meta.metadata,
@@ -43,9 +43,16 @@ users_table = sa.Table("users_usr", meta.metadata,
     sa.Column("address_usr", sa.types.Text, nullable=True),
     sa.Column("phone_usr", sa.types.Unicode(30), nullable=True),
     sa.Column("salary_usr", sa.types.Integer, nullable=True),
-    sa.Column("teamid_usr", sa.types.Integer, nullable=False),
+    sa.Column("teamid_usr", sa.types.Integer, sa.ForeignKey("teams_tms.id_tms"), nullable=False),
     sa.Column("managerid_usr", sa.types.Integer, nullable=False),
     sa.Column("notes_usr", sa.types.Text, nullable=False),
+)
+
+teams_table = sa.Table("teams_tms", meta.metadata,
+    sa.Column("id_tms", sa.types.Integer, primary_key=True),
+    sa.Column("name_tms", sa.types.Unicode(200), nullable=False),
+	sa.Column("managerid_usr", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=False),
+
 )
 
 ## Classes for reflected tables may be defined here, but the table and
@@ -66,3 +73,10 @@ class User(object):
     	
     def __repr__(self):
         return "<User('%d', '%s', '%s')>" % ((self.id_usr or -1), self.email_usr, self.name_usr)
+        
+class Team(object):
+	def __init__(self, name, manager=None):
+		self.name_tms = name
+		self.managerid_tms = manager
+	def __repr__(self):
+		return "<team><id>%s</id><name>%s</name><manager>%s</manager></team>" % (self.id_tms or -1, self.name_tms, self.manager_tms or 0)
