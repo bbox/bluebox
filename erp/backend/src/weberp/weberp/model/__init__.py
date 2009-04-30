@@ -52,9 +52,17 @@ users_table = sa.Table("users_usr", meta.metadata,
 ## mapping itself must be done in the init_model function
 
 class User(object):
-    def __init__(self, email, password):
+    def __init__(self, email, password, name=None, status_usr=0, address_usr=None, phone_usr=None, salary_usr=None, teamid_usr=None, managerid_usr=None, notes_usr=None):
     	self.email_usr = email
     	self.password_usr = password
     	self.status_usr = 0
+    	self.name_usr = name_usr
+    	self.address_usr = address_usr
+    	self.phone_usr = phone_usr
+    	self.salary_usr = salary_usr
+    	self.teamid_usr = teamid_usr
+    	self.managerid_usr = managerid_usr
+    	self.notes_usr = notes_usr
+    	
     def __repr__(self):
         return "<User('%d', '%s', '%s')>" % ((self.id_usr or -1), self.email_usr, self.name_usr)
