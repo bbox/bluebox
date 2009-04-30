@@ -19,8 +19,14 @@ def make_map():
     map.connect('/error/{action}/{id}', controller='error')
 
     # CUSTOM ROUTES HERE
-    map.connect("users_home", "/users", controller="users", action="show")
+    map.connect("add_user", "/users/new", controller="users", action="add")
+    map.connect("update_user", "/users/update/:id", controller="users", action="update")
+    map.connect("delete_user", "/users/delete/:id", controller="users", action="delete")
+
+    map.connect("list_users", "/users/", controller="users", action="list")
+    map.connect("user_details", "/users/:id", controller="users", action="details")
     map.connect("users_login", "/users/login/:username/:password", controller="users", action="login")
+    
 #    map.connect('/{controller}/{action}')
 #    map.connect('/{controller}/{action}/{id}')
 #    map.connect("/users/login", controller='users')

@@ -43,7 +43,7 @@ users_table = sa.Table("users_usr", meta.metadata,
     sa.Column("address_usr", sa.types.Text, nullable=True),
     sa.Column("phone_usr", sa.types.Unicode(30), nullable=True),
     sa.Column("salary_usr", sa.types.Integer, nullable=True),
-    sa.Column("teamid_usr", sa.types.Integer, sa.ForeignKey("teams_tms.id_tms"), nullable=False),
+    sa.Column("teamid_usr", sa.types.Integer, nullable=False),
     sa.Column("managerid_usr", sa.types.Integer, nullable=False),
     sa.Column("notes_usr", sa.types.Text, nullable=False),
 )
@@ -52,9 +52,9 @@ users_table = sa.Table("users_usr", meta.metadata,
 ## mapping itself must be done in the init_model function
 
 class User(object):
-    def __init__(self, email, password, name=None, status_usr=0, address_usr=None, phone_usr=None, salary_usr=None, teamid_usr=None, managerid_usr=None, notes_usr=None):
-    	self.email_usr = email
-    	self.password_usr = password
+    def __init__(self, email_usr, password_usr, name_usr=None, status_usr=0, address_usr=None, phone_usr=None, salary_usr=None, teamid_usr=None, managerid_usr=None, notes_usr=None):
+    	self.email_usr = email_usr
+    	self.password_usr = password_usr
     	self.status_usr = 0
     	self.name_usr = name_usr
     	self.address_usr = address_usr
