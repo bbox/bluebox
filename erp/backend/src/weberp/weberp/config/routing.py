@@ -28,6 +28,7 @@ def make_map():
     map.connect("users_login", "/users/login/:username/:password", controller="users", action="login")
     
     map.resource("/teams", "teams")
+    map.connect("teams_with_manager", "/teams/with/manager/:id", controller="teams", action="teams_for_manager")
 #    map.connect('/{controller}/{action}')
 #    map.connect('/{controller}/{action}/{id}')
 #    map.connect("/users/login", controller='users')
