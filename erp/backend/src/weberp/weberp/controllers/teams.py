@@ -53,11 +53,47 @@ class TeamsController(BaseController):
 		manager = request.params["manager_id"] if "manager_id" in request.params else None
 		team = Team(name, manager)
 		model.meta.Session.add(team)
-		model.meta.Session.commit()        	
+		model.meta.Session.commit()
 		return render("users/opstatus.mako")
 
 	def update(self, id):
-		pass
+		team = model.Team.query().get(id)
+		if team is None:
+			error = Error()
+			error.id = 2
+			error.message = "The team with the id %s does not exist" % id
+			c.error = error
+			return render("users/error.mako")
+		if "name" in request.params:
+			team.name_tms = request.params["name"]
+
+		if "manager_id" in request.params:
+			team.managerid_tms = request.params["manager_id"]
+		
+		model.meta.Session.commit()
+		return render("users/opstatus.mako")
+
 
 	def delete(self, id):
-		pass
+		team = model.Team.query().get(id)
+		if team is None:
+			error = Error()
+			error.id = 2
+			error.message = "The team with the id %s does not exist" % id
+			c.error = error
+			return render("users/error.mako")
+			
+		model.meta.Session.delete(team)
+		model.meta.Session.commit()
+		return render("users/opstatus.mako")
+	
+	def teams_for_manager(self, id):
+		teams = model.Team.query().filter(Team.managerid_tms == id).all()
+		if len(teams) == 0:
+			error = Error()
+			error.id = 5
+			error.message = "No teams for manager id %s." % id
+			c.error = error
+			return render("users/error.mako")
+		c.teams = teams
+		return render("teams/index.mako")
