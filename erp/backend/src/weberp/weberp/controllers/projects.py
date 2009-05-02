@@ -41,19 +41,19 @@ class ProjectsController(BaseController):
 		return render('projects/index.mako')
 		
 	def create(self):
-		if len(request.POST) == 0 or "name" not in request.params or "status" not in request.params or  "added_by" not in request.params:
+		if len(request.POST) == 0 or "name_prj" not in request.params or "status_prj" not in request.params or  "added_by_prj" not in request.params:
 			error = Error()
 			error.id = 4
 			error.message = "Missing required data."
 			c.error = error
 			return render("users/error.mako")
 		
-		name = request.params["name"]
-		status = request.params["status"]
-		added_by = request.params["added_by"]
-		owner = request.params["owner"] if "owner" in request.params else None
-		start = request.params["start"] if "start" in request.params else None
-		end = request.params["end"] if "end" in request.params else None
+		name = request.params["name_prj"]
+		status = request.params["status_prj"]
+		added_by = request.params["added_by_prj"]
+		owner = request.params["owned_by_prj"] if "owned_by_prj" in request.params else None
+		start = request.params["startdate_prj"] if "startdate_prj" in request.params else None
+		end = request.params["enddate_prj"] if "enddate_prj" in request.params else None
 		cost = request.params["cost"] if "cost" in request.params else None
 		
 		project = Project(name, status, added_by, owner, start, end, cost)

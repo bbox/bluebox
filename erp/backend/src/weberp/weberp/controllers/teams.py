@@ -46,15 +46,15 @@ class TeamsController(BaseController):
 	def create(self):
 		"""POST /teams: Create a new item."""
 		# url('teams')
-		if "name" not in request.params:
+		if "name_tms" not in request.params:
 			error = Error()
 			error.id = 4
 			error.message = "Missing required data. At least username/password must be supplied"
 			c.error = error
 			return render("users/error.mako")
 		
-		name = request.params["name"]
-		manager = request.params["manager_id"] if "manager_id" in request.params else None
+		name = request.params["name_tms"]
+		manager = request.params["managerid_tms"] if "managerid_tms" in request.params else None
 		team = Team(name, manager)
 		model.meta.Session.add(team)
 		model.meta.Session.commit()
@@ -68,11 +68,11 @@ class TeamsController(BaseController):
 			error.message = "The team with the id %s does not exist" % id
 			c.error = error
 			return render("users/error.mako")
-		if "name" in request.params:
-			team.name_tms = request.params["name"]
+		if "name_tms" in request.params:
+			team.name_tms = request.params["name_tms"]
 
-		if "manager_id" in request.params:
-			team.managerid_tms = request.params["manager_id"]
+		if "managerid_tms" in request.params:
+			team.managerid_tms = request.params["managerid_tms"]
 		
 		model.meta.Session.commit()
 		return render("users/opstatus.mako")
