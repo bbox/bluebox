@@ -8,8 +8,16 @@
 				<to>${message.to_msg}</to>
 				<title>${message.title_msg}</title>
 				<body>${message.body_msg}</body>
-				<expeditor>${message.expeditor.name_usr}</expeditor>
-				<destinatar>${message.destinatar.name_usr}</destinatar>
+				<expeditor>
+				%if message.expeditor is not None: 
+				${message.expeditor.name_usr}
+				% endif
+				</expeditor>
+				<destinatar>
+				% if message.destinatar is not None:
+				${message.destinatar.name_usr}
+				% endif
+				</destinatar>
 			</message>
 		%endfor
 	</messages>

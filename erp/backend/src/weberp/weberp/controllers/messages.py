@@ -40,7 +40,7 @@ class MessagesController(BaseController):
 		return render('messages/index.mako')
 	
 	def create(self):
-		required_post = ["to", "from", "subject", "body"]
+		required_post = ["to_msg", "from_msg", "subject_msg", "body_msg"]
 		
 		if not validate_presence_of(required_post, request.params):
 			error = Error()
@@ -49,7 +49,7 @@ class MessagesController(BaseController):
 			c.error = error
 			return render("users/error.mako")
 		
-		message = model.Message(request.params["from"], request.params["to"], request.params["subject"], request.params["body"])
+		message = model.Message(request.params["from_msg"], request.params["to_msg"], request.params["subject_msg"], request.params["body_msg"])
 	
 		model.meta.Session.add(message)
 		model.meta.Session.commit()
@@ -65,17 +65,17 @@ class MessagesController(BaseController):
 			c.error = error
 			return render("users/error.mako")
 		
-		if "from" in request.params:
-			message.from_msg = request.params["from"]
+		if "from_msg" in request.params:
+			message.from_msg = request.params["from_msg"]
 
-		if "to" in request.params:
-			message.to_msg = request.params["to"]
+		if "to_msg" in request.params:
+			message.to_msg = request.params["to_msg"]
 
-		if "subject" in request.params:
-			message.title_msg = request.params["subject"]
+		if "subject_msg" in request.params:
+			message.title_msg = request.params["subject_msg"]
 
-		if "body" in request.params:
-			message.body_msg = request.params["body"]	
+		if "body_msg" in request.params:
+			message.body_msg = request.params["body_msg"]	
 
 		model.meta.Session.commit()		
 		return render("users/opstatus.mako")

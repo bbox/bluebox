@@ -11,25 +11,20 @@ log = logging.getLogger(__name__)
 
 class UsersController(BaseController):
 
-#    def index(self):
-#        # Return a rendered template
-#        #return render('/users.mako')
-#        # or, return a response
-#        return 'Hello World'
 	def __init__(self):
 		response.charset = 'utf8'
 		response.content_type  = "application/xml"
 		
 	def add(self):
 		"""POST /users: Create a new item."""
-		if "email" not in request.params or "password" not in request.params:
+		if "email_usr" not in request.params or "password_usr" not in request.params:
 			error = Error()
 			error.id = 4
 			error.message = "Missing required data. At least username/password must be supplied"
 			c.error = error
 			return render("users/error.mako")
 		
-		email = request.params['email']
+		email = request.params['email_usr']
 		result = model.User.query().filter(User.email_usr == email).all()
 		if len(result) > 0:
 			error = Error()
@@ -38,15 +33,15 @@ class UsersController(BaseController):
 			c.error = error
 			return render("users/error.mako")
 		
-		password = request.params["password"]
-		name = request.params["name"]
-		status = 2 if "status" not in request.params else request.params["status"]
-		address = request.params["address"] if "address" in request.params else None
-		phone = request.params["phone"] if "phone" in request.params else None
-		teamid = request.params["team"] if "team" in request.params else None
-		managerid = request.params["manager"] if "manager" in request.params else None
-		salary = request.params["salary"] if "salary" in request.params else None
-		notes = request.params["notes"] if "notes" in request.params else None
+		password = request.params["password_usr"]
+		name = request.params["name_usr"]
+		status = 2 if "status_usr" not in request.params else request.params["status_usr"]
+		address = request.params["address_usr"] if "address_usr" in request.params else None
+		phone = request.params["phone_usr"] if "phone_usr" in request.params else None
+		teamid = request.params["teamid_usr"] if "teamid_usr" in request.params else None
+		managerid = request.params["managerid_usr"] if "managerid_usr" in request.params else None
+		salary = request.params["salary_usr"] if "salary_usr" in request.params else None
+		notes = request.params["notes_usr"] if "notes_usr" in request.params else None
 		
 		user = model.User(email, password, name, status, address, phone, salary, teamid, managerid, notes)
 		model.meta.Session.add(user)
@@ -94,32 +89,33 @@ class UsersController(BaseController):
 			c.error = error
 			return render("users/error.mako")
 			
-		if "password" in request.params:
-			user.password_usr = request.params["password"]
+		if "password_usr" in request.params:
+			user.password_usr = request.params["password_usr"]
 
-		if "name" in request.params:
-			user.name_usr = request.params["name"]
+		if "name_usr" in request.params:
+			user.name_usr = request.params["name_usr"]
 
-		if "status" in request.params:
-			user.status_usr = request.params["status"]
+		if "status_usr" in request.params:
+			user.status_usr = request.params["status_usr"]
 
-		if "address" in request.params:
-			user.address_usr = request.params["address"]
+		if "address_usr" in request.params:
+			user.address_usr = request.params["address_usr"]
 
-		if "phone" in request.params:
-			user.phone_usr = request.params["phone"]
+		if "phone_usr" in request.params:
+			user.phone_usr = request.params["phone_usr"]
 
-		if "teamid" in request.params:
-			user.teamid_usr = request.params["teamid"]
+		if "teamid_usr" in request.params:
+			user.teamid_usr = request.params["teamid_usr"]
 
-		if "managerid" in request.params:
-			user.managerid_usr = request.params["managerid"]
+		if "managerid_usr" in request.params:
+			user.managerid_usr = request.params["managerid_usr"]
 
-		if "salary" in request.params:
-			user.salary_usr = request.params["salary"]
+		if "salary_usr" in request.params:
+			user.salary_usr = request.params["salary_usr"]
 
-		if "notes" in request.params:
-			user.notes_usr = request.params["notes"]
+		if "notes_usr" in request.params:
+			user.notes_usr = request.params["notes_usr"]
+			
 		model.meta.Session.commit()
 		return render("users/opstatus.mako")
 	
