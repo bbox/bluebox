@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<response status="ok">
 <users>
 % for user in c.users:
 <user>
 <id>${user.id_usr}</id>
 <email>${user.email_usr}</email>
-<password>${user.password_usr}</password>
 <name>${user.name_usr}</name>
 <status>
 % if user.status_usr == 0:
@@ -23,3 +23,4 @@
 </user>
 % endfor
 </users>
+</response>

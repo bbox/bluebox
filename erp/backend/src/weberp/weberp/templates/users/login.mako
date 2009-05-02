@@ -3,7 +3,6 @@
 <user>
 <id>${c.user.id_usr}</id>
 <email>${c.user.email_usr}</email>
-<password>${c.user.password_usr}</password>
 <name>${c.user.name_usr}</name>
 <status>
 % if c.user.status_usr == 0:

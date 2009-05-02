@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<response status="ok">
 <teams>
 	% for team in c.teams:
 	<team>
@@ -19,3 +20,4 @@
 	</team>
 	% endfor
 </teams>
+</response>
