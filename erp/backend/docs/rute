@@ -1,0 +1,41 @@
+Rute:
+
+Toate rutele sunt similare; se suporta implicit CRUD (create, retrieve, update, delete). Call-urile sunt ca mai jos:
+
+url-uri implementate:
+
+/users
+/teams
+/projects
+/tasks
+/meetings
+/messages
+/documents - pentru atasamente la proiecte
+
+
+Exemplu: Teams
+API CALLS
+
+Get list of all teams
+	http://server/teams
+
+Get details for a team id:
+	http://server/teams/{id}
+
+
+GET:
+	/teams - get list of all teams
+	/teams/1 - get details for team with id 1
+	/teams/for/4 - get team details for manager with id 4
+
+POST:
+	/teams - add a new team
+
+
+** pentru update si delete, se foloseste HTTP POST, si se trimite un camp in plus, _method = PUT sau DELETE
+
+PUT:
+	/teams/1 - update team with id 1
+
+DELETE:
+	/teams/1 - delete team with id 1
