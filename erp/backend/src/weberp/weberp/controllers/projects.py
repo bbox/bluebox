@@ -76,3 +76,14 @@ class ProjectsController(BaseController):
 		model.meta.Session.delete(project)
 		model.meta.Session.commit()
 		return render("users/opstatus.mako")
+	
+	def filter_by_team(self, id):
+		result = model.Project.query().filter(Project.owned_by_prj == id).all()
+		if len(result) == 0: #nothing in db
+			error = Error()
+			error.id = 1
+			error.message = "Team with id %s has no projects" % id
+			c.error = error
+			return render("users/error.mako")
+		c.projects = result
+		return render("projects/index.mako")

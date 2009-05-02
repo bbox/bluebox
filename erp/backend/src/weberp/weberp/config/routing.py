@@ -26,6 +26,7 @@ def make_map():
 	map.connect("teams_with_manager", "/teams/with/manager/:id", controller="teams", action="teams_for_manager")
 	
 	map.resource("/projects", "projects")
+	map.connect("projects_for_team", "/projects/for/team/:id", controller="projects", action="filter_by_team")
 	
 	map.resource("/documents", "documents")
 	map.resource("/tasks", "tasks")
