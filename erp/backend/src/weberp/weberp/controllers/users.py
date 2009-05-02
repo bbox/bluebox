@@ -16,7 +16,10 @@ class UsersController(BaseController):
 #        #return render('/users.mako')
 #        # or, return a response
 #        return 'Hello World'
-
+	def __init__(self):
+		response.charset = 'utf8'
+		response.content_type  = "application/xml"
+		
 	def add(self):
 		"""POST /users: Create a new item."""
 		if "email" not in request.params or "password" not in request.params:
@@ -61,7 +64,7 @@ class UsersController(BaseController):
 		c.user = result[0]
 		return render("users/login.mako")
 		
-	def list(self):
+	def index(self):
 		c.users = model.User.query().all()
 		if c.users is None or len(c.users) == 0:
 			error = Error()
@@ -71,7 +74,7 @@ class UsersController(BaseController):
 			return render("users/error.mako")
 		return render("users/index.mako")
 	
-	def details(self, id):
+	def show(self, id):
 		result = model.User.query().get(id)
 		if result is None:
 			error = Error()

@@ -12,6 +12,10 @@ log = logging.getLogger(__name__)
 
 class TeamsController(BaseController):
 
+	def __init__(self):
+		response.charset = 'utf8'
+		response.content_type  = "application/xml"
+		
 	def index(self):
 		"""GET /teams: All items in the collection."""
 		# url('teams')
@@ -21,7 +25,7 @@ class TeamsController(BaseController):
 			error.id = 1
 			error.message = "No data in the system"
 			c.error = error
-			return render("users/error.mako")        
+			return render("users/error.mako")
 		c.teams = result
 		return render("teams/index.mako")
 

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<response status="ok">
 <user>
 <id>${c.user.id_usr}</id>
 <email>${c.user.email_usr}</email>
@@ -19,3 +20,4 @@
 <team>${c.user.teamid_usr}</team>
 <manager>${c.user.managerid_usr}</manager>
 </user>
+</response>

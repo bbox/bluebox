@@ -1,1 +1,1 @@
-<status>OK</status>
+<response status="ok" />

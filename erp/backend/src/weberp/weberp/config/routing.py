@@ -8,29 +8,30 @@ from pylons import config
 from routes import Mapper
 
 def make_map():
-    """Create, configure and return the routes Mapper"""
-    map = Mapper(directory=config['pylons.paths']['controllers'],
-                 always_scan=config['debug'])
-    map.minimization = False
-
-    # The ErrorController route (handles 404/500 error pages); it should
-    # likely stay at the top, ensuring it can always be resolved
-    map.connect('/error/{action}', controller='error')
-    map.connect('/error/{action}/{id}', controller='error')
-
-    # CUSTOM ROUTES HERE
-    map.connect("add_user", "/users/new", controller="users", action="add")
-    map.connect("update_user", "/users/update/:id", controller="users", action="update")
-    map.connect("delete_user", "/users/delete/:id", controller="users", action="delete")
-
-    map.connect("list_users", "/users/", controller="users", action="list")
-    map.connect("user_details", "/users/:id", controller="users", action="details")
-    map.connect("users_login", "/users/login/:username/:password", controller="users", action="login")
-    
-    map.resource("/teams", "teams")
-    map.connect("teams_with_manager", "/teams/with/manager/:id", controller="teams", action="teams_for_manager")
-#    map.connect('/{controller}/{action}')
-#    map.connect('/{controller}/{action}/{id}')
-#    map.connect("/users/login", controller='users')
-
-    return map
+	"""Create, configure and return the routes Mapper"""
+	map = Mapper(directory=config['pylons.paths']['controllers'],
+			always_scan=config['debug'])
+	map.minimization = False
+	
+	# The ErrorController route (handles 404/500 error pages); it should
+	# likely stay at the top, ensuring it can always be resolved
+	map.connect('/error/{action}', controller='error')
+	map.connect('/error/{action}/{id}', controller='error')
+	
+	# CUSTOM ROUTES HERE
+	map.resource("/users", "users")
+	map.connect("users_login", "/users/login/:username/:password", controller="users", action="login")
+	
+	map.resource("/teams", "teams")
+	map.connect("teams_with_manager", "/teams/with/manager/:id", controller="teams", action="teams_for_manager")
+	
+	map.resource("/projects", "projects")
+	
+	map.resource("/documents", "documents")
+	map.resource("/tasks", "tasks")
+	map.resource("/meetings", "meetings")
+	map.resource("/messages", "messages")
+	#    map.connect('/{controller}/{action}')
+	#    map.connect('/{controller}/{action}/{id}')
+	
+	return map
