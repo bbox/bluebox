@@ -12,7 +12,7 @@
 			<documents>
 				% for doc in project.documents:
 					<document>
-						<name>${doc.name_doc}</document>
+						<name>${doc.name_doc}</name>
 					</document>
 				% endfor
 			</documents>
