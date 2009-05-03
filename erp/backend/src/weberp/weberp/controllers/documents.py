@@ -40,25 +40,25 @@ class DocumentsController(BaseController):
 		return render('documents/index.mako')
 		
 	def create(self):
-		if "name" not in request.params or "document" not in request.params or "project_id" not in request.params:
+		if "name_doc" not in request.params or "idprj_doc" not in request.params:
 			error = Error()
 			error.id = 4
 			error.message = "Missing required data."
 			c.error = error
 			return render("users/error.mako")
 		
-		name = request.params["name"]
-		project_id = request.params["project_id"]
+		name = request.params["name_doc"]
+		project_id = request.params["idprj_doc"]
 		permanent_store = "%s/%s/" % (self.document_store, project_id)	
-		myfile = request.POST['document']
-		filename = myfile.filename.lstrip(os.sep)
-		permanent_file = open(os.path.join(permanent_store, filename),'w')
+#		myfile = request.POST['document']
+#		filename = myfile.filename.lstrip(os.sep)
+#		permanent_file = open(os.path.join(permanent_store, filename),'w')
 			
-		shutil.copyfileobj(myfile.file, permanent_file)
-		myfile.file.close()
-		permanent_file.close()
+#		shutil.copyfileobj(myfile.file, permanent_file)
+#		myfile.file.close()
+#		permanent_file.close()
 		
-		doc = model.Document( project_id, name, filename)
+		doc = model.Document( project_id, name)
 		model.meta.Session.add(doc)
 		model.meta.Session.commit()
 		return render("users/opstatus.mako")
@@ -89,16 +89,16 @@ class DocumentsController(BaseController):
 		permanent_store = "%s/%s/" % (self.document_store, document.idprj_doc)
 		old_file_location = "%s/%s/%s" % (self.document_store, document.idprj_doc, document.file_doc)
 		
-		if "name" in request.params:
+		if "name_doc" in request.params:
 			document.name_doc = request.params["name"]
 		
-		if "project_id" in request.params:
+		if "idprj_doc" in request.params:
 			document.idprj_doc = request.params["project_id"]
 			
-		if "document" in request.params:
+		if "file_doc" in request.params:
 			#overwrite old file
 			os.remove(old_file_location)
-			myfile = request.POST['document']
+			myfile = request.POST['file_doc']
 			filename = myfile.filename.lstrip(os.sep)
 			permanent_file = open(os.path.join(permanent_store, filename),'w')
 			

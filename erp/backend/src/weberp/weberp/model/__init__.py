@@ -74,7 +74,7 @@ documents_table = sa.Table("documents_doc", meta.metadata,
 	sa.Column("id_doc", sa.types.Integer, primary_key=True),
 	sa.Column("idprj_doc", sa.types.Integer, sa.ForeignKey("projects_prj.id_prj"), nullable=False),
 	sa.Column("name_doc", sa.types.Unicode(200), nullable=False),
-	sa.Column("file_doc", sa.types.Unicode(200), nullable=False),
+	sa.Column("file_doc", sa.types.Unicode(200), nullable=True),
 )
 
 tasks_table = sa.Table("tasks_tsk", meta.metadata,
@@ -161,7 +161,7 @@ class Task(object):
 		return "task"
 		
 class Document(object):
-	def __init__(self, project_id, name, file):
+	def __init__(self, project_id, name, file=None):
 		self.idprj_doc = project_id
 		self.name_doc = name
 		self.file_doc = file

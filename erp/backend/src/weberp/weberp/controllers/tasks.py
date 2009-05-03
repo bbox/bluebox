@@ -42,14 +42,14 @@ class TasksController(BaseController):
 	def create(self):
 		"""POST /tasks: Create a new item."""
 		# url('tasks')
-		if "project_id" not in request.params or "title" not in request.params or "status" not in request.params or "added_by" not in request.params:
+		if "idprj_tsk" not in request.params or "title_tsk" not in request.params or "status_tsk" not in request.params or "added_by_tsk" not in request.params:
 			error = Error()
 			error.id = 1
 			error.message = "Missing required params"
 			c.error = error
 			return render("users/error.mako")	
 		
-		task = model.Task(request.params["project_id"], request.params["title"], request.params["added_by"], request.params["status"])
+		task = model.Task(request.params["idprj_tsk"], request.params["title_tsk"], request.params["added_by_tsk"], request.params["status_tsk"])
 		task.description_tsk = request.params["description_tsk"] if "description_tsk" in request.params else None
 		task.assignedto_tsk = request.params["assignedto_tsk"] if "assignedto_tsk" in request.params else None
 		task.timeleft_tsk = request.params["timeleft_tsk"] if "timeleft_tsk" in request.params else None
