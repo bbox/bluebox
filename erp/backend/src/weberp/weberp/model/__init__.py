@@ -21,7 +21,7 @@ def init_model(engine):
     # Here we use the "contextual session": http://www.sqlalchemy.org/docs/05/session.html#contextual-thread-local-sessions
     meta.Session.mapper(User, users_table, properties = {"team": orm.relation(Team, backref="users", primaryjoin=users_table.c.teamid_usr==teams_table.c.id_tms)})
     meta.Session.mapper(Team, teams_table, properties = {"manager": orm.relation(User, primaryjoin=teams_table.c.managerid_tms==users_table.c.id_usr)})
-    meta.Session.mapper(Project, projects_table, properties = {"owner": orm.relation(User, primaryjoin=projects_table.c.added_by_prj==users_table.c.id_usr), "assignee": orm.relation(User, primaryjoin=projects_table.c.owned_by_prj==users_table.c.id_usr)})
+    meta.Session.mapper(Project, projects_table, properties = {"owner": orm.relation(User, primaryjoin=projects_table.c.added_by_prj==users_table.c.id_usr), "assignee": orm.relation(Team, primaryjoin=projects_table.c.owned_by_prj==teams_table.c.id_tms)})
     meta.Session.mapper(Document, documents_table, properties = {"project": orm.relation(Project, backref="documents", primaryjoin=documents_table.c.idprj_doc==projects_table.c.id_prj)})
     meta.Session.mapper(Task, tasks_table, properties = {"project": orm.relation(Project, backref="tasks", primaryjoin=tasks_table.c.idprj_tsk==projects_table.c.id_prj), "owner": orm.relation(User, primaryjoin=tasks_table.c.added_by_tsk==users_table.c.id_usr), "assignee": orm.relation(User, primaryjoin=tasks_table.c.assignedto_tsk==users_table.c.id_usr)})
     meta.Session.mapper(Meeting, meetings_table)
@@ -64,7 +64,7 @@ projects_table = sa.Table("projects_prj", meta.metadata,
 	sa.Column("name_prj", sa.types.Unicode(200), nullable=False),
 	sa.Column("status_prj", sa.types.Integer, nullable=False),
 	sa.Column("added_by_prj", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=False),
-	sa.Column("owned_by_prj", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=True),
+	sa.Column("owned_by_prj", sa.types.Integer, sa.ForeignKey("teams_tms.id_tms"), nullable=True),
 	sa.Column("startdate_prj", sa.types.DateTime, nullable=True),
 	sa.Column("enddate_prj", sa.types.DateTime, nullable=True),	
 	sa.Column("cost_prj", sa.types.Float, nullable=True),

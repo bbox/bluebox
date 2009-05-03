@@ -13,7 +13,7 @@
 			<addedby_name></addedby_name>
 			% endif
 			% if project.assignee is not None:
-			<assignedto_name>${project.assignee.name_usr}</assignedto_name>
+			<assignedto_name>${project.assignee.name_tms}</assignedto_name>
 			%else:
 			<assignedto_name></assignedto_name>
 			% endif			
