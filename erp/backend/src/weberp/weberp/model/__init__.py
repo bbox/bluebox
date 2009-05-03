@@ -23,7 +23,7 @@ def init_model(engine):
     meta.Session.mapper(Team, teams_table, properties = {"manager": orm.relation(User, primaryjoin=teams_table.c.managerid_tms==users_table.c.id_usr)})
     meta.Session.mapper(Project, projects_table)
     meta.Session.mapper(Document, documents_table, properties = {"project": orm.relation(Project, backref="documents", primaryjoin=documents_table.c.idprj_doc==projects_table.c.id_prj)})
-    meta.Session.mapper(Task, tasks_table, properties = {"project": orm.relation(Project, backref="tasks", primaryjoin=tasks_table.c.idprj_tsk==projects_table.c.id_prj), "assignee": orm.relation(User, primaryjoin=tasks_table.c.assignedto_tsk==users_table.c.id_usr)})
+    meta.Session.mapper(Task, tasks_table, properties = {"project": orm.relation(Project, backref="tasks", primaryjoin=tasks_table.c.idprj_tsk==projects_table.c.id_prj), "owner": orm.relation(User, primaryjoin=tasks_table.c.added_by_tsk==users_table.c.id_usr), "assignee": orm.relation(User, primaryjoin=tasks_table.c.assignedto_tsk==users_table.c.id_usr)})
     meta.Session.mapper(Meeting, meetings_table)
     meta.Session.mapper(Message, messages_table, properties = {"expeditor": orm.relation(User, primaryjoin=messages_table.c.from_msg==users_table.c.id_usr), "destinatar": orm.relation(User, primaryjoin=messages_table.c.to_msg==users_table.c.id_usr)})
 ## Non-reflected tables may be defined and mapped at module level

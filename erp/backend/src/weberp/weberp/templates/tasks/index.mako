@@ -9,6 +9,11 @@
 			<name>${task.title_tsk}</name>
 			<description>${task.description_tsk}</description>			
 			<addedby>${task.added_by_tsk}</addedby>
+			<addedby_name>
+			% if task.owner is not None:
+			${task.owner.name_usr}
+			% endif
+			</addedby_name>
 			<assignedto>${task.assignedto_tsk}</assignedto>
 			<assignedto_name>
 			% if task.assignee is not None:
