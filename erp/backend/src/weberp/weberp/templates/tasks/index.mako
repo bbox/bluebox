@@ -10,6 +10,11 @@
 			<description>${task.description_tsk}</description>			
 			<addedby>${task.added_by_tsk}</addedby>
 			<assignedto>${task.assignedto_tsk}</assignedto>
+			<assignedto_name>
+			% if task.assignee is not None:
+			${task.assignee.name_usr}
+			% endif
+			</assignedto_name>
 			<timeleft>
 			% if task.timeleft_tsk is None:
 			0h
