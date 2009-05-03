@@ -8,6 +8,8 @@ from weberp.lib.helpers import Error
 from weberp.lib.helpers import validate_presence_of
 from weberp import model
 from weberp.model import Task
+from sqlalchemy import or_
+
 
 log = logging.getLogger(__name__)
 
@@ -111,3 +113,14 @@ class TasksController(BaseController):
 		model.meta.Session.delete(task)
 		model.meta.Session.commit()
 		return render("users/opstatus.mako")
+	
+	def tasks_for_user(self, id):
+		tasks = model.Task.query().filter(or_(Task.added_by_tsk == id, Task.assignedto_tsk == id)).all()
+		if len(tasks) == 0:
+			error = Error()
+			error.id = 1
+			error.message = "No data in the system."
+			c.error = error
+			return render("users/error.mako")
+		c.tasks = tasks
+		return render("tasks/index.mako")		

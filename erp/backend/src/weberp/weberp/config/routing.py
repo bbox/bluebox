@@ -31,6 +31,7 @@ def make_map():
 	map.resource("/documents", "documents")
 	map.connect("upload_attach", "/documents/upload/:id", controller="documents", action="upload")
 	map.resource("/tasks", "tasks")
+	map.connect("tasks_for_user", "/tasks/for/user/:id", controller="tasks", action="tasks_for_user")
 	map.resource("/meetings", "meetings")
 	map.resource("/messages", "messages")
 	#    map.connect('/{controller}/{action}')
