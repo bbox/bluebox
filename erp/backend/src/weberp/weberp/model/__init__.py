@@ -107,6 +107,7 @@ messages_table = sa.Table("messages_msg", meta.metadata,
 	sa.Column("to_msg", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=False),
 	sa.Column("title_msg", sa.types.Unicode(255), nullable=False),
 	sa.Column("body_msg", sa.types.Text, nullable=False),
+	sa.Column("read_msg", sa.types.Integer, nullable=False)
 )
 ## Classes for reflected tables may be defined here, but the table and
 ## mapping itself must be done in the init_model function
@@ -184,11 +185,12 @@ class Meeting(object):
 		return "meeting"	
 	
 class Message(object):
-	def __init__(self, from_usr, to_usr, title, body):
+	def __init__(self, from_usr, to_usr, title, body, read=0):
 		self.from_msg = from_usr
 		self.to_msg = to_usr
 		self.title_msg = title
 		self.body_msg = body
+		self.read_msg = read
 	
 	def __repr__(self):
 		return "message"

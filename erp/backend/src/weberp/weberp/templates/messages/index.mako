@@ -18,6 +18,7 @@
 				${message.destinatar.name_usr}
 				% endif
 				</destinatar>
+				<read>${message.read_msg}</read>
 			</message>
 		%endfor
 	</messages>
