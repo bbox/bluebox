@@ -26,6 +26,7 @@ def init_model(engine):
     meta.Session.mapper(Task, tasks_table, properties = {"project": orm.relation(Project, backref="tasks", primaryjoin=tasks_table.c.idprj_tsk==projects_table.c.id_prj), "owner": orm.relation(User, primaryjoin=tasks_table.c.added_by_tsk==users_table.c.id_usr), "assignee": orm.relation(User, primaryjoin=tasks_table.c.assignedto_tsk==users_table.c.id_usr)})
     meta.Session.mapper(Meeting, meetings_table)
     meta.Session.mapper(Message, messages_table, properties = {"expeditor": orm.relation(User, primaryjoin=messages_table.c.from_msg==users_table.c.id_usr), "destinatar": orm.relation(User, primaryjoin=messages_table.c.to_msg==users_table.c.id_usr)})
+    meta.Session.mapper(Contact, contacts_table)
 ## Non-reflected tables may be defined and mapped at module level
 #foo_table = sa.Table("Foo", meta.metadata,
 #    sa.Column("id", sa.types.Integer, primary_key=True),
@@ -108,6 +109,18 @@ messages_table = sa.Table("messages_msg", meta.metadata,
 	sa.Column("title_msg", sa.types.Unicode(255), nullable=False),
 	sa.Column("body_msg", sa.types.Text, nullable=False),
 	sa.Column("read_msg", sa.types.Integer, nullable=False)
+)
+
+contacts_table = sa.Table("contacts_con", meta.metadata,
+	sa.Column("id_con", sa.types.Integer, primary_key=True),
+	sa.Column("denumire_con", sa.types.Unicode(255), nullable=True),
+	sa.Column("persoana_con", sa.types.Unicode(255), nullable=True),
+	sa.Column("email_con", sa.types.Unicode(255), nullable=True),
+	sa.Column("phone_con", sa.types.Unicode(255), nullable=True),
+	sa.Column("adresa_con", sa.types.Unicode(255), nullable=True),
+	sa.Column("tip_con", sa.types.Integer, nullable=True),
+	sa.Column("addedby_con", sa.types.Integer, sa.ForeignKey("users_usr.id_usr"), nullable=True),
+	sa.Column("visible_con", sa.types.Integer, nullable=False)
 )
 ## Classes for reflected tables may be defined here, but the table and
 ## mapping itself must be done in the init_model function
@@ -194,3 +207,17 @@ class Message(object):
 	
 	def __repr__(self):
 		return "message"
+
+class Contact(object):
+	def __init__(self, name, contact, addedby, email=None, phone=None, adresa=None, tip=0, visible=0):
+		self.denumire_con = name
+		self.persoana_con = contact
+		self.addedby_con = addedby
+		self.email_con = email
+		self.phone_con = phone
+		self.adresa_con = adresa
+		self.tip_con = tip
+		self.visible_con = visible
+	
+	def __repr__(self):
+		return "contact"

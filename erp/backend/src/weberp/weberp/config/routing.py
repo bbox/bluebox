@@ -37,6 +37,17 @@ def make_map():
 	map.connect("user_mailbox", "/messages/for/user/:id/all", controller="messages", action="my_messages")
 	map.connect("user_inbox", "/messages/for/user/:id/inbox", controller="messages", action="inbox")
 	map.connect("user_outbox", "/messages/for/user/:id/sent", controller="messages", action="sent")
+	map.resource("/contacts", "contacts")
+	map.connect("all_contacts_for_user", "/contacts/for/user/:id/all", controller="contacts", action="index_for_user")
+	map.connect("clienti_for_user", "/contacts/for/user/:id/clienti", controller="contacts", action="clienti_for_user")
+	map.connect("furnizori_for_user", "/contacts/for/user/:id/furnizori", controller="contacts", action="furnizori_for_user")
+	map.connect("parteneri_for_user", "/contacts/for/user/:id/parteneri", controller="contacts", action="parteneri_for_user")
+
+	map.connect("clienti", "/contacts/clienti/", controller="contacts", action="clienti")
+	map.connect("furnizori", "/contacts/furnizori/", controller="contacts", action="furnizori")
+	map.connect("parteneri", "/contacts/parteneri/", controller="contacts", action="parteneri")
+	#Ivascu Marius: contacts/furnizori
+	#Ivascu Marius: contacts/clienti
 
 	#    map.connect('/{controller}/{action}')
 	#    map.connect('/{controller}/{action}/{id}')
