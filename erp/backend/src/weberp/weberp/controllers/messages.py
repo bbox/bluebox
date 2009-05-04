@@ -8,6 +8,7 @@ from weberp.lib.helpers import Error
 from weberp.lib.helpers import validate_presence_of
 from weberp import model
 from weberp.model import Message
+from sqlalchemy import or_
 
 log = logging.getLogger(__name__)
 
@@ -28,6 +29,38 @@ class MessagesController(BaseController):
 		c.messages = messages			
 		return render('messages/index.mako')
 	
+	def my_messages(self, id):
+		messages = model.Message.query().filter(or_(Message.to_msg == id, Message.from_msg == id)).all()
+		if len(messages) == 0:
+			error = Error()
+			error.id = 1
+			error.message = "No data in the system."
+			c.error = error
+			return render("users/error.mako")
+		c.messages = messages			
+		return render('messages/index.mako')
+		
+	def inbox(self, id):
+		messages = model.Message.query().filter(Message.to_msg == id).all()
+		if len(messages) == 0:
+			error = Error()
+			error.id = 1
+			error.message = "No data in the system."
+			c.error = error
+			return render("users/error.mako")
+		c.messages = messages			
+		return render('messages/index.mako')
+	
+	def sent(self, id):
+		messages = model.Message.query().filter(Message.from_msg == id).all()
+		if len(messages) == 0:
+			error = Error()
+			error.id = 1
+			error.message = "No data in the system."
+			c.error = error
+			return render("users/error.mako")
+		c.messages = messages			
+		return render('messages/index.mako')				
 	def show(self, id):
 		message = model.Message.query().get(id)
 		if message is None:
@@ -93,3 +126,4 @@ class MessagesController(BaseController):
 		model.meta.Session.commit()
 		
 		return render("users/opstatus.mako")
+	

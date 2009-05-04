@@ -34,6 +34,10 @@ def make_map():
 	map.connect("tasks_for_user", "/tasks/for/user/:id", controller="tasks", action="tasks_for_user")
 	map.resource("/meetings", "meetings")
 	map.resource("/messages", "messages")
+	map.connect("user_mailbox", "/messages/for/user/:id/all", controller="messages", action="my_messages")
+	map.connect("user_inbox", "/messages/for/user/:id/inbox", controller="messages", action="inbox")
+	map.connect("user_outbox", "/messages/for/user/:id/sent", controller="messages", action="sent")
+
 	#    map.connect('/{controller}/{action}')
 	#    map.connect('/{controller}/{action}/{id}')
 	
