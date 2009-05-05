@@ -15,7 +15,7 @@ class UsersController(BaseController):
 		response.charset = 'utf8'
 		response.content_type  = "application/xml"
 		
-	def add(self):
+	def create(self):
 		"""POST /users: Create a new item."""
 		if "email_usr" not in request.params or "password_usr" not in request.params:
 			error = Error()
