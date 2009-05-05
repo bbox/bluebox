@@ -52,7 +52,7 @@ class MeetingsController(BaseController):
 			c.error = error
 			return render("users/error.mako")	
 			
-		meeting = model.Meeting(request.params["subject_met"], request.params["participants_met"], request.params["owner_met"], datetime.strptime(request.params["start_met"], "%d/%m/%y"))
+		meeting = model.Meeting(request.params["subject_met"], request.params["participants_met"], request.params["owner_met"], datetime.strptime(request.params["start_met"], "%Y/%m/%d"))
 		meeting.location_met = request.params["location_met"] if "location_met" in request.params else None
 		meeting.notes_met = request.params["notes_met"] if "notes_met" in request.params else None
 		meeting.end_met = request.params["end_met"] if "end_met" in request.params else None
@@ -84,10 +84,10 @@ class MeetingsController(BaseController):
 			meeting.owner_met = request.params["owner_met"]
 		
 		if "start_met" in request.params:
-			meeting.start_met = datetime.strptime(request.params["start_met"], "%d/%m/%y")
+			meeting.start_met = datetime.strptime(request.params["start_met"], "%Y/%m/%d")
 		
 		if "end_met" in request.params:
-			meeting.end_met = datetime.strptime(request.params["end_met"], "%d/%m/%y")
+			meeting.end_met = datetime.strptime(request.params["end_met"], "%Y/%m/%d")
 		
 		if "notes_met" in request.params:
 			meeting.notes_met = request.params["notes_met"]
